@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="r11">
+    <folder id="0">
+        <file id="0" name="Dragon Body.png" width="134" height="134" pivot_x="0" pivot_y="1"/>
+        <file id="1" name="Dragon Wing.png" width="68" height="95" pivot_x="0" pivot_y="1"/>
+    </folder>
+    <entity id="0" name="entity_000">
+        <obj_info name="bone_000" type="bone" w="148.88" h="10"/>
+        <obj_info name="bone_001" type="bone" w="115.811" h="10"/>
+        <animation id="0" name="NewAnimation" length="1000" interval="100">
+            <mainline>
+                <key id="0">
+                    <bone_ref id="0" timeline="2" key="0"/>
+                    <bone_ref id="1" parent="0" timeline="3" key="0"/>
+                    <object_ref id="0" parent="1" timeline="0" key="0" z_index="0"/>
+                    <object_ref id="1" parent="0" timeline="1" key="0" z_index="1"/>
+                </key>
+                <key id="1" time="250">
+                    <bone_ref id="0" timeline="2" key="1"/>
+                    <bone_ref id="1" parent="0" timeline="3" key="1"/>
+                    <object_ref id="0" parent="1" timeline="0" key="0" z_index="0"/>
+                    <object_ref id="1" parent="0" timeline="1" key="0" z_index="1"/>
+                </key>
+                <key id="2" time="973">
+                    <bone_ref id="0" timeline="2" key="1"/>
+                    <bone_ref id="1" parent="0" timeline="3" key="2"/>
+                    <object_ref id="0" parent="1" timeline="0" key="0" z_index="0"/>
+                    <object_ref id="1" parent="0" timeline="1" key="0" z_index="1"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="Dragon Wing">
+                <key id="0" spin="0">
+                    <object folder="0" file="1" x="73.470095" y="52.807089" angle="309.99608" scale_x="1"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="Dragon Body">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" x="129.066098" y="48.322894" angle="269.421274" scale_x="1"/>
+                </key>
+            </timeline>
+            <timeline id="2" obj="0" name="bone_000" object_type="bone">
+                <key id="0">
+                    <bone x="-39.097744" y="-57.142857" angle="90.578726" scale_x="1"/>
+                </key>
+                <key id="1" time="250" spin="-1">
+                    <bone x="-39.097744" y="-57.142857" angle="94.537773" scale_x="1"/>
+                </key>
+            </timeline>
+            <timeline id="3" obj="1" name="bone_001" object_type="bone">
+                <key id="0">
+                    <bone x="21.712267" y="-9.242332" angle="319.425194"/>
+                </key>
+                <key id="1" time="250" spin="-1">
+                    <bone x="21.712267" y="-9.242332" angle="329.279889"/>
+                </key>
+                <key id="2" time="973" spin="-1">
+                    <bone x="-5.038956" y="9.724886" angle="319.779963" scale_x="1" scale_y="0.5"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>
