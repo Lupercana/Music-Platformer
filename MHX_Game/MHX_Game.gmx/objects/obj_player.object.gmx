@@ -25,18 +25,27 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Player parameters (Make all values positive)
+            <string>// Keys
+key_left = 'A';
+key_right = 'D';
+key_jump = 'W';
+
+// Player parameters (Make all values positive)
 g = 0.25;
 fall_speed_max = 20;
 hor_speed_max = 10;
 jump_speed = 5;
 hor_accel = 0.5;
+regular_deccel = 0.1;
+rapid_deccel = 0.2;
 
 // Variable initialization
 x_vel = 0;
 y_vel = 0;
 x_accel = 0;
 y_accel = g;
+braking = 0;
+can_jump = 1;
 </string>
           </argument>
         </arguments>
@@ -59,8 +68,28 @@ y_accel = g;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Set acceleration conditions
-if (place_meeting(x, y + 1, obj_platform)) // Platform below
+            <string>// Get user input
+if (keyboard_check(ord(key_left)))
+    event_user(0);
+if (keyboard_check(ord(key_right)))
+    event_user(1);
+if (keyboard_check_released(ord(key_left)))
+{
+    if (!keyboard_check(ord(key_right)))
+        event_user(2);
+}
+if (keyboard_check_released(ord(key_right)))
+{
+    if (!keyboard_check(ord(key_left)))
+        event_user(3);
+}
+if (keyboard_check_pressed(ord(key_jump)))
+    if (can_jump)
+        event_user(4);
+
+
+// Set acceleration conditions
+if (place_meeting(x, y + 1, obj_platform) &amp;&amp; can_jump) // Platform below
 {
     y_accel = 0;
     y_vel = 0;
@@ -69,8 +98,18 @@ else
     y_accel = g;   
 
 // Adjust velocities
+var x_sign = sign(x_vel);
 x_vel += x_accel;
 y_vel += y_accel;
+if (braking)
+{
+    if (x_sign != sign(x_vel))
+    {
+        x_accel = 0;
+        x_vel = 0;
+        braking = 0;
+    }
+}
 if (x_vel &gt; hor_speed_max)
     x_vel = hor_speed_max;
 else if (x_vel &lt; -hor_speed_max)
@@ -82,14 +121,52 @@ if (y_vel &lt; -fall_speed_max)
 x += x_vel;
 y += y_vel;
 // Move back if velocity sent too far forward
-while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x, y + 1, obj_platform))
-    y--;
-while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x, y - 1, obj_platform))
-    y++;
-while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x + 1, y, obj_platform))
+while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x + (hor_speed_max + 1), y - (fall_speed_max + 1), obj_platform))
+{
+    x_accel = 0;
+    x_vel = 0;
     x--;
-while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x - 1, y, obj_platform))
+}
+while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x - (hor_speed_max + 1), y - (fall_speed_max + 1), obj_platform))
+{
+    x_accel = 0;
+    x_vel = 0;
     x++;
+}
+while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x, y + (hor_speed_max + 1), obj_platform))
+{
+    can_jump = 1;
+    y--;
+}
+while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x, y - (hor_speed_max + 1), obj_platform))
+    y++;
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="14">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// Jump pressed
+
+y_vel = -jump_speed;
+can_jump = 0;
 </string>
           </argument>
         </arguments>
@@ -114,8 +191,8 @@ while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x - 1, y, obj_
             <kind>1</kind>
             <string>// Release right move button
 
-x_accel = 0;
-y_vel = 0;
+x_accel = -regular_deccel;
+braking = 1;
 </string>
           </argument>
         </arguments>
@@ -138,9 +215,10 @@ y_vel = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Press right move button
+            <string>// Release left move button
 
-x_accel = hor_accel;
+x_accel = regular_deccel;
+braking = 1;
 </string>
           </argument>
         </arguments>
@@ -163,10 +241,10 @@ x_accel = hor_accel;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Release left move button
+            <string>// Press right move button
 
-x_accel = 0;
-y_vel = 0;
+x_accel = hor_accel;
+braking = 0;
 </string>
           </argument>
         </arguments>
@@ -192,98 +270,7 @@ y_vel = 0;
             <string>// Press left move button
 
 x_accel = -hor_accel;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="68">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>event_user(2);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="65">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>event_user(0);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="10" enumb="68">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>event_user(3);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="10" enumb="65">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>event_user(0);
+braking = 0;
 </string>
           </argument>
         </arguments>

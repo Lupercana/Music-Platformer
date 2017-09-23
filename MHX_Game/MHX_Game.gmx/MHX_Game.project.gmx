@@ -15,9 +15,7 @@
     <background>background\bg_buildings</background>
   </backgrounds>
   <paths name="paths"/>
-  <scripts name="scripts">
-    <script>scripts\script0.gml</script>
-  </scripts>
+  <scripts name="scripts"/>
   <objects name="objects">
     <object>objects\obj_cmd_game</object>
     <object>objects\obj_player</object>
