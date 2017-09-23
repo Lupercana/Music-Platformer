@@ -6,7 +6,6 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-<<<<<<< Updated upstream
     <sprite>sprites\sp_title</sprite>
     <sprite>sprites\sp_start_game</sprite>
     <sprite>sprites\sp_end_game</sprite>
@@ -14,30 +13,16 @@
     <sprite>sprites\sp_pause</sprite>
     <sprite>sprites\sp_end_level</sprite>
     <sprite>sprites\sprite6</sprite>
-=======
-    <sprite>sprites\sp_player</sprite>
-    <sprite>sprites\sp_platform</sprite>
->>>>>>> Stashed changes
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <objects name="objects">
-<<<<<<< Updated upstream
     <object>objects\obj_title</object>
     <object>objects\obj_start_game</object>
     <object>objects\obj_end_game</object>
     <object>objects\obj_resume_level</object>
     <object>objects\obj_pause</object>
-<<<<<<< HEAD
-    <object>objects\obj_endLevel</object>
-=======
-    <object>objects\obj_game_cmd</object>
-    <object>objects\obj_player</object>
-    <object>objects\obj_platform</object>
->>>>>>> Stashed changes
-=======
     <object>objects\obj_end_level</object>
->>>>>>> 107ac559c3b5e89a2730d4707cdb431f5f9a41f9
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_menu</room>
