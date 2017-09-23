@@ -4,28 +4,36 @@
     <Config>Configs\Default</Config>
   </Configs>
   <NewExtensions/>
-  <sounds name="sound"/>
+  <sounds name="sound">
+    <sound>sound\au_cursormove</sound>
+    <sound>sound\sound0</sound>
+  </sounds>
   <sprites name="sprites">
-    <sprite>sprites\sp_title</sprite>
     <sprite>sprites\sp_start_game</sprite>
     <sprite>sprites\sp_end_game</sprite>
-    <sprite>sprites\sp_resume_level</sprite>
+    <sprite>sprites\spr_musicselect</sprite>
     <sprite>sprites\sp_pause</sprite>
     <sprite>sprites\sp_end_level</sprite>
     <sprite>sprites\sprite6</sprite>
+    <sprite>sprites\spr_title</sprite>
+    <sprite>sprites\sprite9</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\scr_menu.gml</script>
+  </scripts>
   <objects name="objects">
     <object>objects\obj_title</object>
     <object>objects\obj_start_game</object>
     <object>objects\obj_end_game</object>
-    <object>objects\obj_resume_level</object>
+    <object>objects\obj_musicselect</object>
     <object>objects\obj_pause</object>
     <object>objects\obj_end_level</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_menu</room>
+    <room>rooms\rm_musicselect</room>
     <room>rooms\rm_game</room>
     <room>rooms\rm_pause</room>
   </rooms>
