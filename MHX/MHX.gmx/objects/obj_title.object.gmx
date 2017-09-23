@@ -62,6 +62,7 @@ move+=max(keyboard_check_pressed(vk_down),keyboard_check_pressed(ord("S")),0);
 if(move != 0)
 {
    mpos+=move;
+   audio_play_sound(au_cursormove,10,false);
    if(mpos&lt; 0) mpos= array_length_1d(menu)- 1;
    if(mpos&gt; array_length_1d(menu)- 1) mpos= 0;
 }
@@ -94,7 +95,7 @@ if (push == 1) scr_menu();
             <kind>1</kind>
             <string>draw_set_halign(fa_left);
 draw_set_valign(fa_middle);
-draw_set_font(24);
+draw_set_font(32);
 draw_set_colour(c_white);
 
 var m;

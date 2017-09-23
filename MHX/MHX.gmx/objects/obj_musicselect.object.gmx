@@ -25,7 +25,51 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string></string>
+            <string>menu[0]="SONG 1";
+menu[1]="SONG 2";
+menu[2]="SONG 3";
+
+space=64;
+mpos=0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//to move the cursor
+var move=0;
+
+move-=max(keyboard_check_pressed(vk_up),keyboard_check_pressed(ord("W")),0);
+move+=max(keyboard_check_pressed(vk_down),keyboard_check_pressed(ord("S")),0);
+
+if(move != 0)
+{
+   mpos+=move;
+   if(mpos&lt; 0) mpos= array_length_1d(menu)- 1;
+   if(mpos&gt; array_length_1d(menu)- 1) mpos= 0;
+}
+
+var push;
+push= max(keyboard_check_released(vk_space),0);
+if (push == 1) 
+</string>
           </argument>
         </arguments>
       </action>
