@@ -20,6 +20,6 @@
   <width>400</width>
   <height>200</height>
   <frames>
-    <frame index="0">images\sp_endLevel_0.png</frame>
+    <frame index="0">images\sp_resume_level_0.png</frame>
   </frames>
 </sprite>

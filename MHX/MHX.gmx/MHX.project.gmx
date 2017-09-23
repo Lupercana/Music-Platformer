@@ -7,22 +7,22 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprite>sprites\sp_title</sprite>
-    <sprite>sprites\sp_startGame</sprite>
-    <sprite>sprites\sp_endGame</sprite>
-    <sprite>sprites\sp_resumeLevel</sprite>
+    <sprite>sprites\sp_start_game</sprite>
+    <sprite>sprites\sp_end_game</sprite>
+    <sprite>sprites\sp_resume_level</sprite>
     <sprite>sprites\sp_pause</sprite>
-    <sprite>sprites\sp_endLevel</sprite>
+    <sprite>sprites\sp_end_level</sprite>
     <sprite>sprites\sprite6</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <objects name="objects">
     <object>objects\obj_title</object>
-    <object>objects\obj_startGame</object>
-    <object>objects\obj_endGame</object>
-    <object>objects\obj_resumeLevel</object>
+    <object>objects\obj_start_game</object>
+    <object>objects\obj_end_game</object>
+    <object>objects\obj_resume_level</object>
     <object>objects\obj_pause</object>
-    <object>objects\obj_endLevel</object>
+    <object>objects\obj_end_level</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_menu</room>
