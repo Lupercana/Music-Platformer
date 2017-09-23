@@ -8,6 +8,11 @@
   <sprites name="sprites"/>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <rooms name="rooms">
+    <room>rooms\rm_menu</room>
+    <room>rooms\rm_game</room>
+    <room>rooms\rm_pause</room>
+  </rooms>
   <help>
     <rtf>help.rtf</rtf>
   </help>
