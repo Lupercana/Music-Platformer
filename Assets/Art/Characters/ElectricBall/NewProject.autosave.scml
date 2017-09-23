@@ -5,10 +5,67 @@
         <file id="1" name="ElectricBallSpray 2.png" width="133" height="133" pivot_x="0" pivot_y="1"/>
     </folder>
     <entity id="0" name="entity_000">
+        <obj_info name="bone_000" type="bone" w="65.883" h="10"/>
+        <obj_info name="bone_001" type="bone" w="42.9573" h="10"/>
         <animation id="0" name="NewAnimation" length="1000" interval="100">
             <mainline>
-                <key id="0"/>
+                <key id="0">
+                    <bone_ref id="0" timeline="2" key="0"/>
+                    <bone_ref id="1" parent="0" timeline="3" key="0"/>
+                    <object_ref id="0" parent="1" timeline="0" key="0" z_index="0"/>
+                    <object_ref id="1" parent="0" timeline="1" key="0" z_index="1"/>
+                </key>
+                <key id="1" time="134">
+                    <bone_ref id="0" timeline="2" key="0"/>
+                    <bone_ref id="1" parent="0" timeline="3" key="1"/>
+                    <object_ref id="0" parent="1" timeline="0" key="0" z_index="0"/>
+                    <object_ref id="1" parent="0" timeline="1" key="0" z_index="1"/>
+                </key>
+                <key id="2" time="500">
+                    <bone_ref id="0" timeline="2" key="1"/>
+                    <bone_ref id="1" parent="0" timeline="3" key="2"/>
+                    <object_ref id="0" parent="1" timeline="0" key="0" z_index="0"/>
+                    <object_ref id="1" parent="0" timeline="1" key="0" z_index="1"/>
+                </key>
+                <key id="3" time="575">
+                    <bone_ref id="0" timeline="2" key="1"/>
+                    <bone_ref id="1" parent="0" timeline="3" key="3"/>
+                    <object_ref id="0" parent="1" timeline="0" key="0" z_index="0"/>
+                    <object_ref id="1" parent="0" timeline="1" key="0" z_index="1"/>
+                </key>
             </mainline>
+            <timeline id="0" name="ElectricBallBody">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" x="-50.347748" y="44.225951" angle="1.569355" scale_x="1"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="ElectricBallSpray 2">
+                <key id="0" spin="0">
+                    <object folder="0" file="1" x="65.292154" y="66.468613" angle="270.255783"/>
+                </key>
+            </timeline>
+            <timeline id="2" obj="0" name="bone_000" object_type="bone">
+                <key id="0" spin="-1">
+                    <bone x="0.294118" y="0.588235" angle="89.744217"/>
+                </key>
+                <key id="1" time="500">
+                    <bone x="0.294118" y="0.588235" angle="270.313089"/>
+                </key>
+            </timeline>
+            <timeline id="3" obj="1" name="bone_001" object_type="bone">
+                <key id="0" spin="-1">
+                    <bone x="0.592168" y="-0.879718" angle="268.686428" scale_x="1"/>
+                </key>
+                <key id="1" time="134" spin="-1">
+                    <bone x="0.592168" y="-0.879718" angle="154.166205" scale_x="1"/>
+                </key>
+                <key id="2" time="500" spin="-1">
+                    <bone x="0.592168" y="-0.879718" angle="0.856647" scale_x="1"/>
+                </key>
+                <key id="3" time="575" spin="-1">
+                    <bone x="0.592168" y="-0.879718" angle="291.578721" scale_x="1"/>
+                </key>
+            </timeline>
         </animation>
     </entity>
 </spriter_data>
