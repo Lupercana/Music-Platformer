@@ -13,15 +13,9 @@
         <file id="9" name="ActorTopRightLeg.png" width="14" height="50" pivot_x="0" pivot_y="1"/>
     </folder>
     <entity id="0" name="entity_000">
-        <obj_info name="bone_000" type="bone" w="53.3133" h="10"/>
-        <obj_info name="bone_001" type="bone" w="50.3021" h="10"/>
-        <obj_info name="bone_002" type="bone" w="10.2321" h="10"/>
         <animation id="0" name="NewAnimation" length="1000" interval="100">
             <mainline>
                 <key id="0">
-                    <bone_ref id="0" timeline="10" key="0"/>
-                    <bone_ref id="1" timeline="11" key="0"/>
-                    <bone_ref id="2" parent="1" timeline="12" key="0"/>
                     <object_ref id="0" timeline="0" key="0" z_index="0"/>
                     <object_ref id="1" timeline="1" key="0" z_index="1"/>
                     <object_ref id="2" timeline="2" key="0" z_index="2"/>
@@ -82,16 +76,6 @@
             <timeline id="9" name="ActorTopRightLeg">
                 <key id="0" spin="0">
                     <object folder="0" file="9" x="-19.277108" y="-27.409639"/>
-                </key>
-            </timeline>
-            <timeline id="10" obj="0" name="bone_000" object_type="bone">
-                <key id="0" spin="0">
-                    <bone y="-27.710843" angle="90"/>
-                </key>
-            </timeline>
-            <timeline id="11" obj="1" name="bone_001" object_type="bone">
-                <key id="0" spin="0">
-                    <bone y="26.807229" angle="89.656916"/>
                 </key>
             </timeline>
         </animation>
