@@ -31,12 +31,12 @@ key_right = 'D';
 key_jump = 'W';
 
 // Player parameters (Make all values positive)
-g = 0.25;
-fall_speed_max = 20;
-hor_speed_max = 10;
-jump_speed = 5;
-hor_accel = 0.5;
-regular_deccel = 0.1;
+g = 0.90;
+fall_speed_max = 30;
+hor_speed_max = 11;
+jump_speed = 17;
+hor_accel = 1;
+regular_deccel = 0.45;
 rapid_deccel = 0.2;
 
 // Variable initialization
@@ -46,6 +46,7 @@ x_accel = 0;
 y_accel = g;
 braking = 0;
 can_jump = 1;
+wall_touch = 0;
 </string>
           </argument>
         </arguments>
@@ -84,7 +85,7 @@ if (keyboard_check_released(ord(key_right)))
         event_user(3);
 }
 if (keyboard_check_pressed(ord(key_jump)))
-    if (can_jump)
+    if (can_jump &amp;&amp; !wall_touch)
         event_user(4);
 
 
@@ -120,24 +121,30 @@ if (y_vel &lt; -fall_speed_max)
 // Adjust positions
 x += x_vel;
 y += y_vel;
+if (place_meeting(x, y, obj_platform))
+    can_jump = 1;
+if ((place_meeting(x - (hor_speed_max + 1), y - (fall_speed_max + 1), obj_platform) || 
+        place_meeting(x + (hor_speed_max + 1), y - (fall_speed_max + 1), obj_platform)))
+    wall_touch = 1;
+else
+    wall_touch = 0;
 // Move back if velocity sent too far forward
-while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x + (hor_speed_max + 1), y - (fall_speed_max + 1), obj_platform))
+while (place_meeting(x, y, obj_platform) &amp;&amp; ((!can_jump &amp;&amp; place_meeting(x + (hor_speed_max + 1), y + (fall_speed_max + 1), obj_platform)) ||
+                                                (can_jump &amp;&amp; place_meeting(x + (hor_speed_max + 1), y - (fall_speed_max + 1), obj_platform))))
 {
     x_accel = 0;
     x_vel = 0;
     x--;
 }
-while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x - (hor_speed_max + 1), y - (fall_speed_max + 1), obj_platform))
+while (place_meeting(x, y, obj_platform) &amp;&amp; ((!can_jump &amp;&amp; place_meeting(x - (hor_speed_max + 1), y + (fall_speed_max + 1), obj_platform)) ||
+                                                (can_jump &amp;&amp; place_meeting(x - (hor_speed_max + 1), y - (fall_speed_max + 1), obj_platform))))
 {
     x_accel = 0;
     x_vel = 0;
     x++;
 }
 while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x, y + (hor_speed_max + 1), obj_platform))
-{
-    can_jump = 1;
     y--;
-}
 while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x, y - (hor_speed_max + 1), obj_platform))
     y++;
 
