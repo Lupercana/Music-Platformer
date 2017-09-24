@@ -10,12 +10,12 @@
     <sprite>sprites\sp_boundary_wall</sprite>
     <sprite>sprites\sp_square</sprite>
     <sprite>sprites\sp_large_square</sprite>
+    <sprite>sprites\sp_cloud</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_buildings</background>
   </backgrounds>
   <paths name="paths"/>
-  <scripts name="scripts"/>
   <objects name="objects">
     <object>objects\obj_cmd_game</object>
     <object>objects\obj_player</object>
@@ -23,6 +23,7 @@
     <object>objects\obj_boundary_wall</object>
     <object>objects\obj_square</object>
     <object>objects\obj_large_square</object>
+    <object>objects\obj_cloud</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_game</room>

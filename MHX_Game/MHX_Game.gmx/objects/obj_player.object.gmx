@@ -3,7 +3,7 @@
   <spriteName>sp_player</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>1</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -88,7 +88,6 @@ if (keyboard_check_pressed(ord(key_jump)))
     if (can_jump &amp;&amp; !wall_touch)
         event_user(4);
 
-
 // Set acceleration conditions
 if (place_meeting(x, y + 1, obj_platform) &amp;&amp; can_jump) // Platform below
 {
@@ -129,25 +128,29 @@ if ((place_meeting(x - (hor_speed_max + 1), y - (fall_speed_max + 1), obj_platfo
 else
     wall_touch = 0;
 // Move back if velocity sent too far forward
-while (place_meeting(x, y, obj_platform) &amp;&amp; ((!can_jump &amp;&amp; place_meeting(x + (hor_speed_max + 1), y + (fall_speed_max + 1), obj_platform)) ||
-                                                (can_jump &amp;&amp; place_meeting(x + (hor_speed_max + 1), y - (fall_speed_max + 1), obj_platform))))
+
+while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x + (hor_speed_max + 1), y - (abs(y_vel) + 1), obj_platform) &amp;&amp;
+                                            place_meeting(x + (hor_speed_max + 1), y + (abs(y_vel) + 1), obj_platform))
 {
     x_accel = 0;
     x_vel = 0;
     x--;
 }
-while (place_meeting(x, y, obj_platform) &amp;&amp; ((!can_jump &amp;&amp; place_meeting(x - (hor_speed_max + 1), y + (fall_speed_max + 1), obj_platform)) ||
-                                                (can_jump &amp;&amp; place_meeting(x - (hor_speed_max + 1), y - (fall_speed_max + 1), obj_platform))))
+
+while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x - (hor_speed_max + 1), y - (abs(y_vel) + 1), obj_platform) &amp;&amp;
+                                            place_meeting(x - (hor_speed_max + 1), y + (abs(y_vel) + 1), obj_platform))
 {
     x_accel = 0;
     x_vel = 0;
     x++;
 }
-while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x, y + (hor_speed_max + 1), obj_platform))
+while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x, y + (abs(y_vel) + 1), obj_platform))
     y--;
-while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x, y - (hor_speed_max + 1), obj_platform))
+while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x, y - (abs(y_vel) + 1), obj_platform))
+{
+    y_vel = 0;
     y++;
-
+}
 </string>
           </argument>
         </arguments>
@@ -198,7 +201,10 @@ can_jump = 0;
             <kind>1</kind>
             <string>// Release right move button
 
-x_accel = -regular_deccel;
+if (x_vel &gt; 0)
+    x_accel = -regular_deccel;
+else
+    x_accel = regular_deccel;
 braking = 1;
 </string>
           </argument>
@@ -224,7 +230,10 @@ braking = 1;
             <kind>1</kind>
             <string>// Release left move button
 
-x_accel = regular_deccel;
+if (x_vel &gt; 0)
+    x_accel = -regular_deccel;
+else
+    x_accel = regular_deccel;
 braking = 1;
 </string>
           </argument>
