@@ -228,6 +228,7 @@ if (unint_anim_id == -1)
         }
         
         // TODO: Play slash sound here
+         //audio_play_sound(snd_enemydeath,10,false);
     }
     if (keyboard_check_pressed(ord(key_up_slash)))
     {
@@ -255,6 +256,7 @@ if (unint_anim_id == -1)
         }
         
         // TODO: Play same or different slash sound here
+         //audio_play_sound(snd_enemydeath,10,false);
     }
 }
 
@@ -573,6 +575,7 @@ else if (sprite_index == sp_player_forward_attack || sprite_index == sp_player_u
         image_xscale = 0.5;
     image_speed = 0.25;
     instance_destroy(unint_anim_id);
+    //audio_play_sound(snd_enemydeath,10,false);
     unint_anim_id = -1;
     x_vel = 0;
     x_accel = 0;

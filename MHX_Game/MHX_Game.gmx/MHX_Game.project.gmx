@@ -8,6 +8,7 @@
     <sound>sound\snd_cursor_move</sound>
     <sound>sound\snd_game_bg_audio</sound>
     <sound>sound\snd_death</sound>
+    <sound>sound\snd_enemydeath</sound>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_menu_cursor</sprite>
