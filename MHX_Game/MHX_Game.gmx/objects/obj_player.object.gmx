@@ -293,16 +293,16 @@ else
     wall_touch = 0;
 // Move back if velocity sent too far forward
 
-while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x + (hor_speed_cap + 1), y - abs(y_vel), obj_platform) &amp;&amp;
-                                            place_meeting(x + (hor_speed_cap + 1), y + abs(y_vel), obj_platform))
+while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x + (hor_speed_cap + 1), y - (abs(y_vel) + 1), obj_platform) &amp;&amp;
+                                            place_meeting(x + (hor_speed_cap + 1), y + (abs(y_vel) + 1), obj_platform))
 {
     x_accel = 0;
     x_vel = 0;
     x--;
 }
 
-while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x - (hor_speed_cap + 1), y - abs(y_vel), obj_platform) &amp;&amp;
-                                            place_meeting(x - (hor_speed_cap + 1), y + abs(y_vel), obj_platform))
+while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x - (hor_speed_cap + 1), y - (abs(y_vel) + 1), obj_platform) &amp;&amp;
+                                            place_meeting(x - (hor_speed_cap + 1), y + (abs(y_vel) + 1), obj_platform))
 {
     x_accel = 0;
     x_vel = 0;
