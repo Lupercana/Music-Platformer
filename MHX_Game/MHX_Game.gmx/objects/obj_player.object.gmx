@@ -62,6 +62,31 @@ can_attack = 1;
 unint_anim_id = -1;
 image_speed = 0.25;
 death = 0;
+can_shoot = 1;
+power_up = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>can_shoot = 1;
 </string>
           </argument>
         </arguments>
@@ -327,6 +352,31 @@ while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x, y - (abs(y_
         </arguments>
       </action>
     </event>
+    <event eventtype="4" ename="obj_sword_pickup">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>power_up = 1;
+with (other)
+    instance_destroy();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="4" ename="obj_mon">
       <action>
         <libid>1</libid>
@@ -380,13 +430,31 @@ while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x, y - (abs(y_
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var dir = point_direction(x, y, mouse_x, mouse_y);
-
-//var inst = instance_create(x, y, obj_square);
-//inst.direction = dir;
-//inst.speed = shot_speed;
-
-//instance_create(mouse_x, mouse_y, obj_rectangle);
+            <string>if (power_up &amp;&amp; can_shoot)
+{
+    var dir = point_direction(x, y, mouse_x, mouse_y);
+    
+    //var inst = instance_create(x, y, obj_square);
+    //inst.direction = dir;
+    //inst.speed = shot_speed;
+    
+    unint_anim_id = instance_create(x, y, obj_sword);
+    unint_anim_id.speed = 10;
+    unint_anim_id.direction = dir;
+    unint_anim_id.image_angle = dir - 180;
+    
+    can_shoot = 0;
+    alarm[0] = room_speed * 1;
+    
+    sprite_index = sp_player_fg;
+    if (facing_right)
+        image_xscale = -0.5;
+    else
+        image_xscale = 0.5;
+    image_speed = 0.5;
+    image_index = 0;
+    
+}
 </string>
           </argument>
         </arguments>
@@ -566,19 +634,24 @@ else if (sprite_index == sp_player_slide)
     image_index = 19;
     image_speed = 0;
 }
-else if (sprite_index == sp_player_forward_attack || sprite_index == sp_player_up_attack)
+else if (sprite_index == sp_player_forward_attack || sprite_index == sp_player_up_attack || sprite_index == sp_player_fg)
 {
+    if (sprite_index != sp_player_fg)
+    {
+        with (unint_anim_id)
+            instance_destroy();
+    }
+    unint_anim_id = -1;
+    x_vel = 0;
+    x_accel = 0;
+    
     sprite_index = sp_player_idle;
     if (facing_right)
         image_xscale = -0.5;
     else
         image_xscale = 0.5;
     image_speed = 0.25;
-    instance_destroy(unint_anim_id);
     //audio_play_sound(snd_enemydeath,10,false);
-    unint_anim_id = -1;
-    x_vel = 0;
-    x_accel = 0;
 }
 else if (sprite_index == sp_player_death)
 {
@@ -586,36 +659,6 @@ else if (sprite_index == sp_player_death)
     room_goto(rm_end);
 }
 </string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="64">
-      <action>
-        <libid>1</libid>
-        <id>613</id>
-        <kind>0</kind>
-        <userelative>-1</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_draw_variable</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>0</kind>
-            <string>can_jump</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>50</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>50</string>
           </argument>
         </arguments>
       </action>

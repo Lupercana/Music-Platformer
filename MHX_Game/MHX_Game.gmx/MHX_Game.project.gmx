@@ -22,6 +22,7 @@
     <sprite>sprites\sp_player_up_attack</sprite>
     <sprite>sprites\sp_player_death</sprite>
     <sprite>sprites\sp_player_cheer</sprite>
+    <sprite>sprites\sp_player_fg</sprite>
     <sprite>sprites\sp_mon_spark</sprite>
     <sprite>sprites\sp_mon_dragon</sprite>
     <sprite>sprites\sp_mon_bear</sprite>
@@ -34,6 +35,7 @@
     <sprite>sprites\sp_cloud</sprite>
     <sprite>sprites\sp_balcony</sprite>
     <sprite>sprites\sp_portal</sprite>
+    <sprite>sprites\sp_sword</sprite>
     <sprite>sprites\sp_birds</sprite>
     <sprite>sprites\sp_tree</sprite>
     <sprite>sprites\sp_sl</sprite>
@@ -73,6 +75,8 @@
     <object>objects\obj_cloud</object>
     <object>objects\obj_balcony</object>
     <object>objects\obj_portal</object>
+    <object>objects\obj_sword</object>
+    <object>objects\obj_sword_pickup</object>
     <object>objects\obj_birds</object>
     <object>objects\obj_tree</object>
     <object>objects\obj_sparkle</object>
