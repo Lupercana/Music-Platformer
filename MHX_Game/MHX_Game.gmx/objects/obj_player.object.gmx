@@ -31,6 +31,8 @@ key_right = 'D';
 key_jump = 'W';
 key_crouch = 'S';
 key_sprint = 'J';
+key_forward_slash = 'K';
+key_up_slash = 'L';
 
 // Player parameters (Make all values positive)
 g = 0.90;
@@ -53,6 +55,8 @@ braking = 0;
 can_jump = 1;
 wall_touch = 0;
 hor_speed_cap = run_max;
+can_attack = 1;
+attack_id = -1;
 </string>
           </argument>
         </arguments>
@@ -185,6 +189,30 @@ if (keyboard_check_released(ord(key_crouch)))
         image_xscale = 0.5;
     image_speed = 1;
     image_index = 0;
+}
+if (keyboard_check_pressed(ord(key_forward_slash)) &amp;&amp; attack_id == -1)
+{
+    sprite_index = sp_player_forward_attack;
+    if (facing_right)
+        image_xscale = -0.5;
+    else
+        image_xscale = 0.5;
+    image_speed = 0.5;
+    image_index = 0;
+    
+    attack_id = instance_create(x + (facing_right * 2 - 1) * 32, y - 32, obj_forward_attack);
+}
+if (keyboard_check_pressed(ord(key_up_slash)) &amp;&amp; attack_id == -1)
+{
+    sprite_index = sp_player_up_attack;
+    if (facing_right)
+        image_xscale = -0.5;
+    else
+        image_xscale = 0.5;
+    image_speed = 0.5;
+    image_index = 0;
+    
+    attack_id = instance_create(x - (facing_right * 2 - 1) * 48, y - 64, obj_up_attack);
 }
 
 // Set acceleration conditions
@@ -411,7 +439,10 @@ facing_right = 0;
           <argument>
             <kind>1</kind>
             <string>if (sprite_index == sp_player_jump)
+{
     sprite_index = sp_player_idle;
+    image_speed = 0;
+}
 else if (sprite_index == sp_player_crouch_down)
 {
     image_index = 9;
@@ -426,6 +457,13 @@ else if (sprite_index == sp_player_slide)
 {
     image_index = 19;
     image_speed = 0;
+}
+else if (sprite_index == sp_player_forward_attack || sprite_index == sp_player_up_attack)
+{
+    sprite_index = sp_player_idle;
+    image_speed = 0;
+    instance_destroy(attack_id);
+    attack_id = -1;
 }
 </string>
           </argument>

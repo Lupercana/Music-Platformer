@@ -13,11 +13,15 @@
     <sprite>sprites\sp_player_crouch_up</sprite>
     <sprite>sprites\sp_player_slide</sprite>
     <sprite>sprites\sp_player_sprint</sprite>
+    <sprite>sprites\sp_player_forward_attack</sprite>
+    <sprite>sprites\sp_player_up_attack</sprite>
     <sprite>sprites\sp_boundary_wall</sprite>
     <sprite>sprites\sp_square</sprite>
     <sprite>sprites\sp_large_square</sprite>
     <sprite>sprites\sp_cloud</sprite>
     <sprite>sprites\sp_portal</sprite>
+    <sprite>sprites\sp_forward_attack</sprite>
+    <sprite>sprites\sp_up_attack</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_buildings</background>
@@ -26,6 +30,9 @@
   <objects name="objects">
     <object>objects\obj_cmd_game</object>
     <object>objects\obj_player</object>
+    <object>objects\obj_attack</object>
+    <object>objects\obj_forward_attack</object>
+    <object>objects\obj_up_attack</object>
     <object>objects\obj_platform</object>
     <object>objects\obj_boundary_wall</object>
     <object>objects\obj_square</object>
