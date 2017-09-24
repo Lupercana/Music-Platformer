@@ -80,72 +80,85 @@ attack_id = -1;
           <argument>
             <kind>1</kind>
             <string>// Get user input
-if (keyboard_check(ord(key_left)))
+if (attack_id == -1)
 {
-    if (can_jump)
+    if (keyboard_check(ord(key_left)))
     {
-        if (keyboard_check(ord(key_sprint)))
+        if (can_jump)
         {
-            hor_accel = hor_accel_sprint;
-            hor_speed_cap = sprint_max;
-            sprite_index = sp_player_sprint;
+            if (keyboard_check(ord(key_sprint)))
+            {
+                hor_accel = hor_accel_sprint;
+                hor_speed_cap = sprint_max;
+                sprite_index = sp_player_sprint;
+            }
+            else
+            {
+                hor_accel = hor_accel_run;
+                hor_speed_cap = run_max;
+                sprite_index = sp_player_run;
+            }
+            image_xscale = 0.5;
+            image_speed = 0.5;
         }
-        else
+        event_user(0);
+    }
+    if (keyboard_check(ord(key_right)))
+    {
+        if (can_jump)
         {
-            hor_accel = hor_accel_run;
-            hor_speed_cap = run_max;
-            sprite_index = sp_player_run;
+            if (keyboard_check(ord(key_sprint)))
+            {
+                hor_accel = hor_accel_sprint;
+                hor_speed_cap = sprint_max;
+                sprite_index = sp_player_sprint;
+            }
+            else
+            {
+                hor_accel = hor_accel_run;
+                hor_speed_cap = run_max;
+                sprite_index = sp_player_run;
+            }
+            image_xscale = -0.5;
+            image_speed = 0.5;
         }
-        image_xscale = 0.5;
-        image_speed = 0.5;
+        event_user(1);
     }
-    event_user(0);
-}
-if (keyboard_check(ord(key_right)))
-{
-    if (can_jump)
+    if (keyboard_check_released(ord(key_left)))
     {
-        if (keyboard_check(ord(key_sprint)))
+        if (!keyboard_check(ord(key_right)))
         {
-            hor_accel = hor_accel_sprint;
-            hor_speed_cap = sprint_max;
-            sprite_index = sp_player_sprint;
+            event_user(2);
+            sprite_index = sp_player_idle;
+            image_xscale = 0.5;
         }
-        else
+    }
+    if (keyboard_check_released(ord(key_right)))
+    {
+        if (!keyboard_check(ord(key_left)))
         {
-            hor_accel = hor_accel_run;
-            hor_speed_cap = run_max;
-            sprite_index = sp_player_run;
+            event_user(3);
+            sprite_index = sp_player_idle;
+            image_xscale = -0.5;
         }
-        image_xscale = -0.5;
-        image_speed = 0.5;
     }
-    event_user(1);
-}
-if (keyboard_check_released(ord(key_left)))
-{
-    if (!keyboard_check(ord(key_right)))
+    if (keyboard_check_pressed(ord(key_jump)))
     {
-        event_user(2);
-        sprite_index = sp_player_idle;
-        image_xscale = 0.5;
+        if (can_jump &amp;&amp; !wall_touch)
+        {
+            event_user(4);
+            sprite_index = sp_player_jump;
+            if (facing_right)
+                image_xscale = -0.5;
+            else
+                image_xscale = 0.5;
+            image_speed = 1;
+            image_index = 0;
+        }
     }
-}
-if (keyboard_check_released(ord(key_right)))
-{
-    if (!keyboard_check(ord(key_left)))
+    if (keyboard_check_pressed(ord(key_crouch)) &amp;&amp; x_vel == 0)
     {
-        event_user(3);
-        sprite_index = sp_player_idle;
-        image_xscale = -0.5;
-    }
-}
-if (keyboard_check_pressed(ord(key_jump)))
-{
-    if (can_jump &amp;&amp; !wall_touch)
-    {
-        event_user(4);
-        sprite_index = sp_player_jump;
+        sprite_index = sp_player_crouch_down;
         if (facing_right)
             image_xscale = -0.5;
         else
@@ -153,66 +166,83 @@ if (keyboard_check_pressed(ord(key_jump)))
         image_speed = 1;
         image_index = 0;
     }
-}
-if (keyboard_check_pressed(ord(key_crouch)) &amp;&amp; x_vel == 0)
-{
-    sprite_index = sp_player_crouch_down;
-    if (facing_right)
-        image_xscale = -0.5;
-    else
-        image_xscale = 0.5;
-    image_speed = 1;
-    image_index = 0;
-}
-else if (keyboard_check_pressed(ord(key_crouch)) &amp;&amp; x_vel != 0)
-{
-    sprite_index = sp_player_slide;
-    if (facing_right)
-        image_xscale = -0.5;
-    else
-        image_xscale = 0.5;
-    image_speed = 0.5;
-    image_index = 0;
-    
-    if (x_vel &gt; 0)
-        x_accel = -slow_deccel;
-    else
-        x_accel = slow_deccel;
-    braking = 1;
-}
-if (keyboard_check_released(ord(key_crouch)))
-{
-    sprite_index = sp_player_crouch_up;
-    if (facing_right)
-        image_xscale = -0.5;
-    else
-        image_xscale = 0.5;
-    image_speed = 1;
-    image_index = 0;
-}
-if (keyboard_check_pressed(ord(key_forward_slash)) &amp;&amp; attack_id == -1)
-{
-    sprite_index = sp_player_forward_attack;
-    if (facing_right)
-        image_xscale = -0.5;
-    else
-        image_xscale = 0.5;
-    image_speed = 0.5;
-    image_index = 0;
-    
-    attack_id = instance_create(x + (facing_right * 2 - 1) * 32, y - 32, obj_forward_attack);
-}
-if (keyboard_check_pressed(ord(key_up_slash)) &amp;&amp; attack_id == -1)
-{
-    sprite_index = sp_player_up_attack;
-    if (facing_right)
-        image_xscale = -0.5;
-    else
-        image_xscale = 0.5;
-    image_speed = 0.5;
-    image_index = 0;
-    
-    attack_id = instance_create(x - (facing_right * 2 - 1) * 48, y - 64, obj_up_attack);
+    else if (keyboard_check_pressed(ord(key_crouch)) &amp;&amp; x_vel != 0)
+    {
+        sprite_index = sp_player_slide;
+        if (facing_right)
+            image_xscale = -0.5;
+        else
+            image_xscale = 0.5;
+        image_speed = 1;
+        image_index = 0;
+        
+        if (x_vel &gt; 0)
+            x_accel = -slow_deccel;
+        else
+            x_accel = slow_deccel;
+        braking = 1;
+    }
+    if (keyboard_check_released(ord(key_crouch)))
+    {
+        sprite_index = sp_player_crouch_up;
+        if (facing_right)
+            image_xscale = -0.5;
+        else
+            image_xscale = 0.5;
+        image_speed = 1;
+        image_index = 0;
+    }
+    if (keyboard_check_pressed(ord(key_forward_slash)))
+    {
+        sprite_index = sp_player_forward_attack;
+        if (facing_right)
+            image_xscale = -0.5;
+        else
+            image_xscale = 0.5;
+        image_speed = 0.5;
+        image_index = 0;
+        
+        if (facing_right)
+        {
+            attack_id = instance_create(x + 32, y - 32, obj_forward_attack);
+            attack_id.player_id = id;
+            attack_id.off_x = 32;
+            attack_id.off_y = -32;
+        }
+        else
+        {
+            attack_id = instance_create(x - 48, y - 32, obj_forward_attack);
+            attack_id.player_id = id;
+            attack_id.off_x = -48;
+            attack_id.off_y = -32;
+        }
+        
+    }
+    if (keyboard_check_pressed(ord(key_up_slash)))
+    {
+        sprite_index = sp_player_up_attack;
+        if (facing_right)
+            image_xscale = -0.5;
+        else
+            image_xscale = 0.5;
+        image_speed = 0.5;
+        image_index = 0;
+        
+        if (facing_right)
+        {
+            attack_id = instance_create(x - 48, y - 64, obj_up_attack);
+            attack_id.player_id = id;
+            attack_id.off_x = -48;
+            attack_id.off_y = -64;
+        }
+        else
+        {
+            attack_id = instance_create(x - 16, y - 64, obj_up_attack);
+            attack_id.player_id = id;
+            attack_id.off_x = -16;
+            attack_id.off_y = -64;
+        }
+    }
 }
 
 // Set acceleration conditions
