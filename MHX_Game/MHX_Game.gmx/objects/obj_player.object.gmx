@@ -61,6 +61,7 @@ hor_speed_cap = run_max;
 can_attack = 1;
 unint_anim_id = -1;
 image_speed = 0.25;
+death = 0;
 </string>
           </argument>
         </arguments>
@@ -150,7 +151,7 @@ if (unint_anim_id == -1)
     }
     if (keyboard_check_pressed(ord(key_jump)))
     {
-        if (can_jump &amp;&amp; !wall_touch)
+        if (!wall_touch)
         {
             event_user(4);
             sprite_index = sp_player_jump;
@@ -282,27 +283,26 @@ if (y_vel &gt;= fall_speed_max)
     y_vel = fall_speed_max;
 
 // Adjust positions
-x += x_vel;
-y += y_vel;
 if (place_meeting(x, y, obj_platform))
     can_jump = 1;
-if ((place_meeting(x - (hor_speed_cap + 1), y - (fall_speed_max + 1), obj_platform) || 
-        place_meeting(x + (hor_speed_cap + 1), y - (fall_speed_max + 1), obj_platform)))
+if ((place_meeting(x - (hor_speed_cap + 1) - x_vel, y - (fall_speed_max + 1), obj_platform) || 
+        place_meeting(x + (hor_speed_cap + 1) - x_vel, y - (fall_speed_max + 1), obj_platform)))
     wall_touch = 1;
 else
     wall_touch = 0;
 // Move back if velocity sent too far forward
-
-while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x + (hor_speed_cap + 1), y - (abs(y_vel) + 1), obj_platform) &amp;&amp;
-                                            place_meeting(x + (hor_speed_cap + 1), y + (abs(y_vel) + 1), obj_platform))
+x += x_vel;
+y += y_vel;
+while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x + (hor_speed_cap + 1) - x_vel, y - (abs(y_vel) + 1), obj_platform) &amp;&amp;
+                                            place_meeting(x + (hor_speed_cap + 1) - x_vel, y + (abs(y_vel) + 1), obj_platform))
 {
     x_accel = 0;
     x_vel = 0;
     x--;
 }
 
-while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x - (hor_speed_cap + 1), y - (abs(y_vel) + 1), obj_platform) &amp;&amp;
-                                            place_meeting(x - (hor_speed_cap + 1), y + (abs(y_vel) + 1), obj_platform))
+while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x - (hor_speed_cap + 1) - x_vel, y - (abs(y_vel) + 1), obj_platform) &amp;&amp;
+                                            place_meeting(x - (hor_speed_cap + 1) - x_vel, y + (abs(y_vel) + 1), obj_platform))
 {
     x_accel = 0;
     x_vel = 0;
@@ -337,14 +337,18 @@ while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x, y - (abs(y_
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>unint_anim_id = 1;
-sprite_index = sp_player_death;
-if (facing_right)
-    image_xscale = -0.5;
-else
-    image_xscale = 0.5;
-image_speed = 0.1;
-image_index = 0;
+            <string>if (!death)
+{
+    unint_anim_id = 1;
+    sprite_index = sp_player_death;
+    if (facing_right)
+        image_xscale = -0.5;
+    else
+        image_xscale = 0.5;
+    image_speed = 0.1;
+    image_index = 0;
+    death = 1;
+}
 </string>
           </argument>
         </arguments>
@@ -571,6 +575,36 @@ else if (sprite_index == sp_player_death)
     room_goto(rm_end);
 }
 </string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>613</id>
+        <kind>0</kind>
+        <userelative>-1</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_draw_variable</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>0</kind>
+            <string>can_jump</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>50</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>50</string>
           </argument>
         </arguments>
       </action>
