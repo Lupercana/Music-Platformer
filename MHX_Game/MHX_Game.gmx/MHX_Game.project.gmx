@@ -6,7 +6,10 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\sp_player</sprite>
+    <sprite>sprites\sp_player_idle</sprite>
+    <sprite>sprites\sp_player_run</sprite>
+    <sprite>sprites\sp_player_jump</sprite>
+    <sprite>sprites\sp_player_crouch</sprite>
     <sprite>sprites\sp_boundary_wall</sprite>
     <sprite>sprites\sp_square</sprite>
     <sprite>sprites\sp_large_square</sprite>
