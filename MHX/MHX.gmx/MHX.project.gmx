@@ -7,6 +7,7 @@
   <sounds name="sound">
     <sound>sound\au_cursormove</sound>
     <sound>sound\sound0</sound>
+    <sound>sound\sound2</sound>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\sp_start_game</sprite>
@@ -22,6 +23,8 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\scr_menu.gml</script>
+    <script>scripts\music_detection.gml</script>
+    <script>scripts\spawn_portal_enemies.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\obj_title</object>
@@ -29,6 +32,7 @@
     <object>objects\obj_end_game</object>
     <object>objects\obj_pause</object>
     <object>objects\obj_end_level</object>
+    <object>objects\object5</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_menu</room>
