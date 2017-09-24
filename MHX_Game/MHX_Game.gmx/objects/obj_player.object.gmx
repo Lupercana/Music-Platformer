@@ -30,15 +30,18 @@ key_left = 'A';
 key_right = 'D';
 key_jump = 'W';
 key_crouch = 'S';
+key_sprint = 'J';
 
 // Player parameters (Make all values positive)
 g = 0.90;
 fall_speed_max = 30;
-hor_speed_max = 11;
+run_max = 5;
+sprint_max = 11;
 jump_speed = 17;
-hor_accel = 1;
+hor_accel_run = 0.8;
+hor_accel_sprint = 1;
 regular_deccel = 0.45;
-rapid_deccel = 0.2;
+slow_deccel = 0.2;
 
 // Variable initialization
 facing_right = 1;
@@ -49,6 +52,7 @@ y_accel = g;
 braking = 0;
 can_jump = 1;
 wall_touch = 0;
+hor_speed_cap = run_max;
 </string>
           </argument>
         </arguments>
@@ -74,23 +78,45 @@ wall_touch = 0;
             <string>// Get user input
 if (keyboard_check(ord(key_left)))
 {
-    event_user(0);
     if (can_jump)
     {
-        sprite_index = sp_player_run;
+        if (keyboard_check(ord(key_sprint)))
+        {
+            hor_accel = hor_accel_sprint;
+            hor_speed_cap = sprint_max;
+            sprite_index = sp_player_sprint;
+        }
+        else
+        {
+            hor_accel = hor_accel_run;
+            hor_speed_cap = run_max;
+            sprite_index = sp_player_run;
+        }
         image_xscale = 0.5;
         image_speed = 0.5;
     }
+    event_user(0);
 }
 if (keyboard_check(ord(key_right)))
 {
-    event_user(1);
     if (can_jump)
     {
-        sprite_index = sp_player_run;
+        if (keyboard_check(ord(key_sprint)))
+        {
+            hor_accel = hor_accel_sprint;
+            hor_speed_cap = sprint_max;
+            sprite_index = sp_player_sprint;
+        }
+        else
+        {
+            hor_accel = hor_accel_run;
+            hor_speed_cap = run_max;
+            sprite_index = sp_player_run;
+        }
         image_xscale = -0.5;
         image_speed = 0.5;
     }
+    event_user(1);
 }
 if (keyboard_check_released(ord(key_left)))
 {
@@ -111,6 +137,7 @@ if (keyboard_check_released(ord(key_right)))
     }
 }
 if (keyboard_check_pressed(ord(key_jump)))
+{
     if (can_jump &amp;&amp; !wall_touch)
     {
         event_user(4);
@@ -120,7 +147,45 @@ if (keyboard_check_pressed(ord(key_jump)))
         else
             image_xscale = 0.5;
         image_speed = 1;
+        image_index = 0;
     }
+}
+if (keyboard_check_pressed(ord(key_crouch)) &amp;&amp; x_vel == 0)
+{
+    sprite_index = sp_player_crouch_down;
+    if (facing_right)
+        image_xscale = -0.5;
+    else
+        image_xscale = 0.5;
+    image_speed = 1;
+    image_index = 0;
+}
+else if (keyboard_check_pressed(ord(key_crouch)) &amp;&amp; x_vel != 0)
+{
+    sprite_index = sp_player_slide;
+    if (facing_right)
+        image_xscale = -0.5;
+    else
+        image_xscale = 0.5;
+    image_speed = 0.5;
+    image_index = 0;
+    
+    if (x_vel &gt; 0)
+        x_accel = -slow_deccel;
+    else
+        x_accel = slow_deccel;
+    braking = 1;
+}
+if (keyboard_check_released(ord(key_crouch)))
+{
+    sprite_index = sp_player_crouch_up;
+    if (facing_right)
+        image_xscale = -0.5;
+    else
+        image_xscale = 0.5;
+    image_speed = 1;
+    image_index = 0;
+}
 
 // Set acceleration conditions
 if (place_meeting(x, y + 1, obj_platform) &amp;&amp; can_jump) // Platform below
@@ -144,10 +209,10 @@ if (braking)
         braking = 0;
     }
 }
-if (x_vel &gt; hor_speed_max)
-    x_vel = hor_speed_max;
-else if (x_vel &lt; -hor_speed_max)
-    x_vel = -hor_speed_max;
+if (x_vel &gt; hor_speed_cap)
+    x_vel = hor_speed_cap;
+else if (x_vel &lt; -hor_speed_cap)
+    x_vel = -hor_speed_cap;
 if (y_vel &lt; -fall_speed_max)
     y_vel = -fall_speed_max;
 
@@ -156,23 +221,23 @@ x += x_vel;
 y += y_vel;
 if (place_meeting(x, y, obj_platform))
     can_jump = 1;
-if ((place_meeting(x - (hor_speed_max + 1), y - (fall_speed_max + 1), obj_platform) || 
-        place_meeting(x + (hor_speed_max + 1), y - (fall_speed_max + 1), obj_platform)))
+if ((place_meeting(x - (hor_speed_cap + 1), y - (fall_speed_max + 1), obj_platform) || 
+        place_meeting(x + (hor_speed_cap + 1), y - (fall_speed_max + 1), obj_platform)))
     wall_touch = 1;
 else
     wall_touch = 0;
 // Move back if velocity sent too far forward
 
-while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x + (hor_speed_max + 1), y - (abs(y_vel) + 1), obj_platform) &amp;&amp;
-                                            place_meeting(x + (hor_speed_max + 1), y + (abs(y_vel) + 1), obj_platform))
+while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x + (hor_speed_cap + 1), y - (abs(y_vel) + 1), obj_platform) &amp;&amp;
+                                            place_meeting(x + (hor_speed_cap + 1), y + (abs(y_vel) + 1), obj_platform))
 {
     x_accel = 0;
     x_vel = 0;
     x--;
 }
 
-while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x - (hor_speed_max + 1), y - (abs(y_vel) + 1), obj_platform) &amp;&amp;
-                                            place_meeting(x - (hor_speed_max + 1), y + (abs(y_vel) + 1), obj_platform))
+while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x - (hor_speed_cap + 1), y - (abs(y_vel) + 1), obj_platform) &amp;&amp;
+                                            place_meeting(x - (hor_speed_cap + 1), y + (abs(y_vel) + 1), obj_platform))
 {
     x_accel = 0;
     x_vel = 0;
@@ -347,6 +412,21 @@ facing_right = 0;
             <kind>1</kind>
             <string>if (sprite_index == sp_player_jump)
     sprite_index = sp_player_idle;
+else if (sprite_index == sp_player_crouch_down)
+{
+    image_index = 9;
+    image_speed = 0;
+}
+else if (sprite_index == sp_player_crouch_up)
+{
+    sprite_index = sp_player_idle;
+    image_speed = 0;
+}
+else if (sprite_index == sp_player_slide)
+{
+    image_index = 19;
+    image_speed = 0;
+}
 </string>
           </argument>
         </arguments>

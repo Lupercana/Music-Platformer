@@ -9,11 +9,15 @@
     <sprite>sprites\sp_player_idle</sprite>
     <sprite>sprites\sp_player_run</sprite>
     <sprite>sprites\sp_player_jump</sprite>
-    <sprite>sprites\sp_player_crouch</sprite>
+    <sprite>sprites\sp_player_crouch_down</sprite>
+    <sprite>sprites\sp_player_crouch_up</sprite>
+    <sprite>sprites\sp_player_slide</sprite>
+    <sprite>sprites\sp_player_sprint</sprite>
     <sprite>sprites\sp_boundary_wall</sprite>
     <sprite>sprites\sp_square</sprite>
     <sprite>sprites\sp_large_square</sprite>
     <sprite>sprites\sp_cloud</sprite>
+    <sprite>sprites\sp_portal</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_buildings</background>
@@ -27,6 +31,7 @@
     <object>objects\obj_square</object>
     <object>objects\obj_large_square</object>
     <object>objects\obj_cloud</object>
+    <object>objects\object8</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_game</room>
