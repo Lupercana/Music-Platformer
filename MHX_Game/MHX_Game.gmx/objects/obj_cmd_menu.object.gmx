@@ -25,8 +25,36 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///To move the cursor
-/*
+            <string>//Initializes the menu
+menu[0]="Start Game";
+menu[1]="Instructions";
+menu[2]="Exit Game";
+
+space=64;
+mpos=0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// To move the cursor
 var move=0;
 
 move-=max(keyboard_check_pressed(vk_up),keyboard_check_pressed(ord("W")),0);
@@ -35,15 +63,51 @@ move+=max(keyboard_check_pressed(vk_down),keyboard_check_pressed(ord("S")),0);
 if(move != 0)
 {
    mpos+=move;
-   audio_play_sound(au_cursormove,10,false);
+   audio_play_sound(snd_cursor_move,10,false);
    if(mpos&lt; 0) mpos= array_length_1d(menu)- 1;
    if(mpos&gt; array_length_1d(menu)- 1) mpos= 0;
 }
 
 var push;
-push= max(keyboard_check_released(vk_space),0);
+push= max(keyboard_check_pressed(vk_enter),0);
 if (push == 1) scr_menu();
-*/
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_set_halign(fa_left);
+draw_set_valign(fa_middle);
+draw_set_font(32);
+draw_set_colour(c_white);
+
+var vert_offset = 450;
+
+var m;
+draw_set_color(c_black);
+for(m = 0; m &lt; array_length_1d(menu) ; m += 1)
+{
+    draw_text(x+ space, y + (m * space) + vert_offset, string(menu[m]))
+}
+
+draw_sprite(spr_menu_cursor, 0, x + 16, y + mpos * space + vert_offset);
 </string>
           </argument>
         </arguments>

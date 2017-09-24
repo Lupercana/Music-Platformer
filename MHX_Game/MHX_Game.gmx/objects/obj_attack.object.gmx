@@ -76,6 +76,7 @@ y = player_id.y + off_y;
             <kind>1</kind>
             <string>with (other)
     instance_destroy();
+    audio_play_sound(snd_enemydeath,10,false);
 </string>
           </argument>
         </arguments>
