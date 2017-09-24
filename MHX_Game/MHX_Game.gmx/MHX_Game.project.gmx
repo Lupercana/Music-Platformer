@@ -36,6 +36,9 @@
     <sprite>sprites\sp_portal</sprite>
     <sprite>sprites\sp_birds</sprite>
     <sprite>sprites\sp_tree</sprite>
+    <sprite>sprites\sp_sl</sprite>
+    <sprite>sprites\sp_sm</sprite>
+    <sprite>sprites\sp_ss</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_menu</background>
@@ -72,6 +75,7 @@
     <object>objects\obj_portal</object>
     <object>objects\obj_birds</object>
     <object>objects\obj_tree</object>
+    <object>objects\obj_sparkle</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_menu</room>

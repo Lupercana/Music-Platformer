@@ -77,6 +77,9 @@ y = player_id.y + off_y;
             <string>with (other)
     instance_destroy();
     audio_play_sound(snd_enemydeath,10,false);
+    instance_create(x,y,obj_sparkle);
+    
+    
 </string>
           </argument>
         </arguments>
