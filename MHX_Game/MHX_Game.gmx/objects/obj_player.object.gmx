@@ -36,7 +36,7 @@ key_up_slash = 'L';
 
 // Player parameters (Make all values positive)
 g = 0.90;
-fall_speed_max = 30;
+fall_speed_max = 20;
 run_max = 5;
 sprint_max = 11;
 jump_speed = 17;
@@ -439,12 +439,12 @@ with (other)
     //inst.speed = shot_speed;
     
     unint_anim_id = instance_create(x, y, obj_sword);
-    unint_anim_id.speed = 10;
+    unint_anim_id.speed = 88;
     unint_anim_id.direction = dir;
     unint_anim_id.image_angle = dir - 180;
     
     can_shoot = 0;
-    alarm[0] = room_speed * 1;
+    alarm[0] = room_speed * 0.2164;
     
     sprite_index = sp_player_fg;
     if (facing_right)
