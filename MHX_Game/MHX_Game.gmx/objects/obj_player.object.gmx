@@ -3,7 +3,7 @@
   <spriteName>sp_player_idle</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>1</depth>
+  <depth>-1</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -56,7 +56,8 @@ can_jump = 1;
 wall_touch = 0;
 hor_speed_cap = run_max;
 can_attack = 1;
-attack_id = -1;
+unint_anim_id = -1;
+image_speed = 0.25;
 </string>
           </argument>
         </arguments>
@@ -80,7 +81,7 @@ attack_id = -1;
           <argument>
             <kind>1</kind>
             <string>// Get user input
-if (attack_id == -1)
+if (unint_anim_id == -1)
 {
     if (keyboard_check(ord(key_left)))
     {
@@ -131,6 +132,7 @@ if (attack_id == -1)
             event_user(2);
             sprite_index = sp_player_idle;
             image_xscale = 0.5;
+            image_speed = 0.25;
         }
     }
     if (keyboard_check_released(ord(key_right)))
@@ -140,6 +142,7 @@ if (attack_id == -1)
             event_user(3);
             sprite_index = sp_player_idle;
             image_xscale = -0.5;
+            image_speed = 0.25;
         }
     }
     if (keyboard_check_pressed(ord(key_jump)))
@@ -204,17 +207,17 @@ if (attack_id == -1)
         
         if (facing_right)
         {
-            attack_id = instance_create(x + 32, y - 32, obj_forward_attack);
-            attack_id.player_id = id;
-            attack_id.off_x = 32;
-            attack_id.off_y = -32;
+            unint_anim_id = instance_create(x + 32, y - 32, obj_forward_attack);
+            unint_anim_id.player_id = id;
+            unint_anim_id.off_x = 32;
+            unint_anim_id.off_y = -32;
         }
         else
         {
-            attack_id = instance_create(x - 48, y - 32, obj_forward_attack);
-            attack_id.player_id = id;
-            attack_id.off_x = -48;
-            attack_id.off_y = -32;
+            unint_anim_id = instance_create(x - 48, y - 32, obj_forward_attack);
+            unint_anim_id.player_id = id;
+            unint_anim_id.off_x = -48;
+            unint_anim_id.off_y = -32;
         }
         
     }
@@ -225,22 +228,22 @@ if (attack_id == -1)
             image_xscale = -0.5;
         else
             image_xscale = 0.5;
-        image_speed = 0.5;
+        image_speed = 1;
         image_index = 0;
         
         if (facing_right)
         {
-            attack_id = instance_create(x - 48, y - 64, obj_up_attack);
-            attack_id.player_id = id;
-            attack_id.off_x = -48;
-            attack_id.off_y = -64;
+            unint_anim_id = instance_create(x - 48, y - 64, obj_up_attack);
+            unint_anim_id.player_id = id;
+            unint_anim_id.off_x = -48;
+            unint_anim_id.off_y = -64;
         }
         else
         {
-            attack_id = instance_create(x - 16, y - 64, obj_up_attack);
-            attack_id.player_id = id;
-            attack_id.off_x = -16;
-            attack_id.off_y = -64;
+            unint_anim_id = instance_create(x - 16, y - 64, obj_up_attack);
+            unint_anim_id.player_id = id;
+            unint_anim_id.off_x = -16;
+            unint_anim_id.off_y = -64;
         }
     }
 }
@@ -271,8 +274,8 @@ if (x_vel &gt; hor_speed_cap)
     x_vel = hor_speed_cap;
 else if (x_vel &lt; -hor_speed_cap)
     x_vel = -hor_speed_cap;
-if (y_vel &lt; -fall_speed_max)
-    y_vel = -fall_speed_max;
+if (y_vel &gt;= fall_speed_max)
+    y_vel = fall_speed_max;
 
 // Adjust positions
 x += x_vel;
@@ -308,6 +311,35 @@ while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x, y - (abs(y_
     y_vel = 0;
     y++;
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_mon">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>unint_anim_id = 1;
+sprite_index = sp_player_death;
+if (facing_right)
+    image_xscale = -0.5;
+else
+    image_xscale = 0.5;
+image_speed = 0.1;
 </string>
           </argument>
         </arguments>
@@ -471,7 +503,11 @@ facing_right = 0;
             <string>if (sprite_index == sp_player_jump)
 {
     sprite_index = sp_player_idle;
-    image_speed = 0;
+    if (facing_right)
+        image_xscale = -0.5;
+    else
+        image_xscale = 0.5;
+    image_speed = 0.25;
 }
 else if (sprite_index == sp_player_crouch_down)
 {
@@ -481,7 +517,11 @@ else if (sprite_index == sp_player_crouch_down)
 else if (sprite_index == sp_player_crouch_up)
 {
     sprite_index = sp_player_idle;
-    image_speed = 0;
+    if (facing_right)
+        image_xscale = -0.5;
+    else
+        image_xscale = 0.5;
+    image_speed = 0.25;
 }
 else if (sprite_index == sp_player_slide)
 {
@@ -491,9 +531,17 @@ else if (sprite_index == sp_player_slide)
 else if (sprite_index == sp_player_forward_attack || sprite_index == sp_player_up_attack)
 {
     sprite_index = sp_player_idle;
-    image_speed = 0;
-    instance_destroy(attack_id);
-    attack_id = -1;
+    if (facing_right)
+        image_xscale = -0.5;
+    else
+        image_xscale = 0.5;
+    image_speed = 0.25;
+    instance_destroy(unint_anim_id);
+    unint_anim_id = -1;
+}
+else if (sprite_index == sp_player_death)
+{
+    game_end();
 }
 </string>
           </argument>

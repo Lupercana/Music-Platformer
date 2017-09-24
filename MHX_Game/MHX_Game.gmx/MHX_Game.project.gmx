@@ -15,6 +15,10 @@
     <sprite>sprites\sp_player_sprint</sprite>
     <sprite>sprites\sp_player_forward_attack</sprite>
     <sprite>sprites\sp_player_up_attack</sprite>
+    <sprite>sprites\sp_player_death</sprite>
+    <sprite>sprites\sp_mon_spark</sprite>
+    <sprite>sprites\sp_mon_dragon</sprite>
+    <sprite>sprites\sp_mon_bear</sprite>
     <sprite>sprites\sp_boundary_wall</sprite>
     <sprite>sprites\sp_square</sprite>
     <sprite>sprites\sp_large_square</sprite>
@@ -31,6 +35,10 @@
     <object>objects\obj_cmd_menu</object>
     <object>objects\obj_cmd_game</object>
     <object>objects\obj_player</object>
+    <object>objects\obj_mon</object>
+    <object>objects\obj_mon_spark</object>
+    <object>objects\obj_mon_dragon</object>
+    <object>objects\obj_mon_bear</object>
     <object>objects\obj_attack</object>
     <object>objects\obj_forward_attack</object>
     <object>objects\obj_up_attack</object>
@@ -39,7 +47,7 @@
     <object>objects\obj_square</object>
     <object>objects\obj_large_square</object>
     <object>objects\obj_cloud</object>
-    <object>objects\object8</object>
+    <object>objects\obj_portal</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_game</room>
