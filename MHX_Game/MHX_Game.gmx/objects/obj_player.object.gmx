@@ -161,6 +161,7 @@ if (unint_anim_id == -1)
                 image_xscale = 0.5;
             image_speed = 1;
             image_index = 0;
+            // TODO: Play jump sound here
         }
     }
     if (keyboard_check_pressed(ord(key_crouch)) &amp;&amp; x_vel == 0)
@@ -189,6 +190,7 @@ if (unint_anim_id == -1)
         else
             x_accel = slow_deccel;
         braking = 1;
+        // TODO: Play slide sound here
     }
     if (keyboard_check_released(ord(key_crouch)))
     {
@@ -207,7 +209,7 @@ if (unint_anim_id == -1)
             image_xscale = -0.5;
         else
             image_xscale = 0.5;
-        image_speed = 0.5;
+        image_speed = 1.0;
         image_index = 0;
         
         if (facing_right)
@@ -225,6 +227,7 @@ if (unint_anim_id == -1)
             unint_anim_id.off_y = -32;
         }
         
+        // TODO: Play slash sound here
     }
     if (keyboard_check_pressed(ord(key_up_slash)))
     {
@@ -233,7 +236,7 @@ if (unint_anim_id == -1)
             image_xscale = -0.5;
         else
             image_xscale = 0.5;
-        image_speed = 1;
+        image_speed = 1.0;
         image_index = 0;
         
         if (facing_right)
@@ -250,6 +253,8 @@ if (unint_anim_id == -1)
             unint_anim_id.off_x = -16;
             unint_anim_id.off_y = -64;
         }
+        
+        // TODO: Play same or different slash sound here
     }
 }
 
@@ -572,6 +577,7 @@ else if (sprite_index == sp_player_forward_attack || sprite_index == sp_player_u
 }
 else if (sprite_index == sp_player_death)
 {
+    audio_stop_sound(snd_game_bg_audio);
     room_goto(rm_end);
 }
 </string>
