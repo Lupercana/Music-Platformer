@@ -25,14 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>g = 0.90;
-fall_speed_max = 30;
+            <string>g = 0.50;
+fall_speed_max = 15;
 
 image_speed = 2;
-image_xscale = 0.25;
-image_yscale = 0.25;
+image_xscale = 0.35;
+image_yscale = 0.35;
 
-x_spd = 7;
+x_spd = 5;
 y_vel = 0;
 </string>
           </argument>

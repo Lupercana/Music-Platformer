@@ -44,20 +44,24 @@ hor_accel_run = 0.8;
 hor_accel_sprint = 1;
 regular_deccel = 0.45;
 slow_deccel = 0.2;
+shot_speed = 5;
 
 // Variable initialization
 facing_right = 1;
 x_vel = 0;
 y_vel = 0;
+hor_accel = hor_accel_run;
 x_accel = 0;
 y_accel = g;
 braking = 0;
+sliding = 0;
 can_jump = 1;
 wall_touch = 0;
 hor_speed_cap = run_max;
 can_attack = 1;
 unint_anim_id = -1;
 image_speed = 0.25;
+death = 0;
 </string>
           </argument>
         </arguments>
@@ -83,7 +87,7 @@ image_speed = 0.25;
             <string>// Get user input
 if (unint_anim_id == -1)
 {
-    if (keyboard_check(ord(key_left)))
+    if (keyboard_check(ord(key_left)) &amp;&amp; !sliding)
     {
         if (can_jump)
         {
@@ -104,7 +108,7 @@ if (unint_anim_id == -1)
         }
         event_user(0);
     }
-    if (keyboard_check(ord(key_right)))
+    if (keyboard_check(ord(key_right)) &amp;&amp; !sliding)
     {
         if (can_jump)
         {
@@ -147,7 +151,7 @@ if (unint_anim_id == -1)
     }
     if (keyboard_check_pressed(ord(key_jump)))
     {
-        if (can_jump &amp;&amp; !wall_touch)
+        if (!wall_touch)
         {
             event_user(4);
             sprite_index = sp_player_jump;
@@ -157,6 +161,7 @@ if (unint_anim_id == -1)
                 image_xscale = 0.5;
             image_speed = 1;
             image_index = 0;
+            // TODO: Play jump sound here
         }
     }
     if (keyboard_check_pressed(ord(key_crouch)) &amp;&amp; x_vel == 0)
@@ -171,6 +176,7 @@ if (unint_anim_id == -1)
     }
     else if (keyboard_check_pressed(ord(key_crouch)) &amp;&amp; x_vel != 0)
     {
+        sliding = 1;
         sprite_index = sp_player_slide;
         if (facing_right)
             image_xscale = -0.5;
@@ -184,16 +190,17 @@ if (unint_anim_id == -1)
         else
             x_accel = slow_deccel;
         braking = 1;
+        // TODO: Play slide sound here
     }
     if (keyboard_check_released(ord(key_crouch)))
     {
-        sprite_index = sp_player_crouch_up;
+        sliding = 0;
+        sprite_index = sp_player_idle;
         if (facing_right)
             image_xscale = -0.5;
         else
             image_xscale = 0.5;
-        image_speed = 1;
-        image_index = 0;
+        image_speed = 0.25;
     }
     if (keyboard_check_pressed(ord(key_forward_slash)))
     {
@@ -202,7 +209,7 @@ if (unint_anim_id == -1)
             image_xscale = -0.5;
         else
             image_xscale = 0.5;
-        image_speed = 0.5;
+        image_speed = 1.0;
         image_index = 0;
         
         if (facing_right)
@@ -220,6 +227,8 @@ if (unint_anim_id == -1)
             unint_anim_id.off_y = -32;
         }
         
+        // TODO: Play slash sound here
+         //audio_play_sound(snd_enemydeath,10,false);
     }
     if (keyboard_check_pressed(ord(key_up_slash)))
     {
@@ -228,7 +237,7 @@ if (unint_anim_id == -1)
             image_xscale = -0.5;
         else
             image_xscale = 0.5;
-        image_speed = 1;
+        image_speed = 1.0;
         image_index = 0;
         
         if (facing_right)
@@ -245,6 +254,9 @@ if (unint_anim_id == -1)
             unint_anim_id.off_x = -16;
             unint_anim_id.off_y = -64;
         }
+        
+        // TODO: Play same or different slash sound here
+         //audio_play_sound(snd_enemydeath,10,false);
     }
 }
 
@@ -278,27 +290,26 @@ if (y_vel &gt;= fall_speed_max)
     y_vel = fall_speed_max;
 
 // Adjust positions
-x += x_vel;
-y += y_vel;
 if (place_meeting(x, y, obj_platform))
     can_jump = 1;
-if ((place_meeting(x - (hor_speed_cap + 1), y - (fall_speed_max + 1), obj_platform) || 
-        place_meeting(x + (hor_speed_cap + 1), y - (fall_speed_max + 1), obj_platform)))
+if ((place_meeting(x - (hor_speed_cap + 1) - x_vel, y - (fall_speed_max + 1), obj_platform) || 
+        place_meeting(x + (hor_speed_cap + 1) - x_vel, y - (fall_speed_max + 1), obj_platform)))
     wall_touch = 1;
 else
     wall_touch = 0;
 // Move back if velocity sent too far forward
-
-while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x + (hor_speed_cap + 1), y - (abs(y_vel) + 1), obj_platform) &amp;&amp;
-                                            place_meeting(x + (hor_speed_cap + 1), y + (abs(y_vel) + 1), obj_platform))
+x += x_vel;
+y += y_vel;
+while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x + (hor_speed_cap + 1) - x_vel, y - (abs(y_vel) + 1), obj_platform) &amp;&amp;
+                                            place_meeting(x + (hor_speed_cap + 1) - x_vel, y + (abs(y_vel) + 1), obj_platform))
 {
     x_accel = 0;
     x_vel = 0;
     x--;
 }
 
-while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x - (hor_speed_cap + 1), y - (abs(y_vel) + 1), obj_platform) &amp;&amp;
-                                            place_meeting(x - (hor_speed_cap + 1), y + (abs(y_vel) + 1), obj_platform))
+while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x - (hor_speed_cap + 1) - x_vel, y - (abs(y_vel) + 1), obj_platform) &amp;&amp;
+                                            place_meeting(x - (hor_speed_cap + 1) - x_vel, y + (abs(y_vel) + 1), obj_platform))
 {
     x_accel = 0;
     x_vel = 0;
@@ -333,13 +344,49 @@ while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x, y - (abs(y_
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>unint_anim_id = 1;
-sprite_index = sp_player_death;
-if (facing_right)
-    image_xscale = -0.5;
-else
-    image_xscale = 0.5;
-image_speed = 0.1;
+            <string>if (!death)
+{
+    audio_stop_all();
+    audio_play_sound(snd_death,10,false);
+    unint_anim_id = 1;
+    sprite_index = sp_player_death;
+    if (facing_right)
+        image_xscale = -0.5;
+    else
+        image_xscale = 0.5;
+    image_speed = 0.1;
+    image_index = 0;
+    death = 1;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="53">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>var dir = point_direction(x, y, mouse_x, mouse_y);
+
+//var inst = instance_create(x, y, obj_square);
+//inst.direction = dir;
+//inst.speed = shot_speed;
+
+//instance_create(mouse_x, mouse_y, obj_rectangle);
 </string>
           </argument>
         </arguments>
@@ -511,17 +558,8 @@ facing_right = 0;
 }
 else if (sprite_index == sp_player_crouch_down)
 {
-    image_index = 9;
+    image_index = 19;
     image_speed = 0;
-}
-else if (sprite_index == sp_player_crouch_up)
-{
-    sprite_index = sp_player_idle;
-    if (facing_right)
-        image_xscale = -0.5;
-    else
-        image_xscale = 0.5;
-    image_speed = 0.25;
 }
 else if (sprite_index == sp_player_slide)
 {
@@ -537,13 +575,47 @@ else if (sprite_index == sp_player_forward_attack || sprite_index == sp_player_u
         image_xscale = 0.5;
     image_speed = 0.25;
     instance_destroy(unint_anim_id);
+    //audio_play_sound(snd_enemydeath,10,false);
     unint_anim_id = -1;
+    x_vel = 0;
+    x_accel = 0;
 }
 else if (sprite_index == sp_player_death)
 {
-    game_end();
+    audio_stop_sound(snd_game_bg_audio);
+    room_goto(rm_end);
 }
 </string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>613</id>
+        <kind>0</kind>
+        <userelative>-1</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_draw_variable</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>0</kind>
+            <string>can_jump</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>50</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>50</string>
           </argument>
         </arguments>
       </action>

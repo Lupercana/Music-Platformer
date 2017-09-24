@@ -25,10 +25,13 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>wait_time = 10;
+            <string>start_wait_time = 2;
+wait_time = 10;
 
 spawn_type = 0;
 spawn_amount = 0;
+
+alarm[0] = start_wait_time * room_speed;
 </string>
           </argument>
         </arguments>

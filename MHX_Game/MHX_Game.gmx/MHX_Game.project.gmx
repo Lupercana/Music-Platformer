@@ -4,35 +4,58 @@
     <Config>Configs\Default</Config>
   </Configs>
   <NewExtensions/>
-  <sounds name="sound"/>
+  <sounds name="sound">
+    <sound>sound\snd_cursor_move</sound>
+    <sound>sound\snd_game_bg_audio</sound>
+    <sound>sound\snd_death</sound>
+    <sound>sound\snd_enemydeath</sound>
+  </sounds>
   <sprites name="sprites">
+    <sprite>sprites\spr_menu_cursor</sprite>
     <sprite>sprites\sp_player_idle</sprite>
     <sprite>sprites\sp_player_run</sprite>
     <sprite>sprites\sp_player_jump</sprite>
     <sprite>sprites\sp_player_crouch_down</sprite>
-    <sprite>sprites\sp_player_crouch_up</sprite>
     <sprite>sprites\sp_player_slide</sprite>
     <sprite>sprites\sp_player_sprint</sprite>
     <sprite>sprites\sp_player_forward_attack</sprite>
     <sprite>sprites\sp_player_up_attack</sprite>
     <sprite>sprites\sp_player_death</sprite>
+    <sprite>sprites\sp_player_cheer</sprite>
     <sprite>sprites\sp_mon_spark</sprite>
     <sprite>sprites\sp_mon_dragon</sprite>
     <sprite>sprites\sp_mon_bear</sprite>
+    <sprite>sprites\sp_forward_attack</sprite>
+    <sprite>sprites\sp_up_attack</sprite>
     <sprite>sprites\sp_boundary_wall</sprite>
     <sprite>sprites\sp_square</sprite>
     <sprite>sprites\sp_large_square</sprite>
+    <sprite>sprites\sp_rectangle</sprite>
     <sprite>sprites\sp_cloud</sprite>
+    <sprite>sprites\sp_balcony</sprite>
     <sprite>sprites\sp_portal</sprite>
-    <sprite>sprites\sp_forward_attack</sprite>
-    <sprite>sprites\sp_up_attack</sprite>
+    <sprite>sprites\sp_birds</sprite>
+    <sprite>sprites\sp_tree</sprite>
+    <sprite>sprites\sp_sl</sprite>
+    <sprite>sprites\sp_sm</sprite>
+    <sprite>sprites\sp_ss</sprite>
   </sprites>
   <backgrounds name="background">
+    <background>background\bg_menu</background>
+    <background>background\bg_instructions</background>
     <background>background\bg_buildings</background>
+    <background>background\bg_end</background>
   </backgrounds>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\scr_menu.gml</script>
+  </scripts>
+  <fonts name="fonts">
+    <font>fonts\fnt_end</font>
+  </fonts>
   <objects name="objects">
     <object>objects\obj_cmd_menu</object>
+    <object>objects\obj_cmd_return</object>
     <object>objects\obj_cmd_game</object>
     <object>objects\obj_player</object>
     <object>objects\obj_mon</object>
@@ -42,15 +65,23 @@
     <object>objects\obj_attack</object>
     <object>objects\obj_forward_attack</object>
     <object>objects\obj_up_attack</object>
+    <object>objects\obj_square</object>
     <object>objects\obj_platform</object>
     <object>objects\obj_boundary_wall</object>
-    <object>objects\obj_square</object>
+    <object>objects\obj_rectangle</object>
     <object>objects\obj_large_square</object>
     <object>objects\obj_cloud</object>
+    <object>objects\obj_balcony</object>
     <object>objects\obj_portal</object>
+    <object>objects\obj_birds</object>
+    <object>objects\obj_tree</object>
+    <object>objects\obj_sparkle</object>
   </objects>
   <rooms name="rooms">
+    <room>rooms\rm_menu</room>
+    <room>rooms\rm_instructions</room>
     <room>rooms\rm_game</room>
+    <room>rooms\rm_end</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
