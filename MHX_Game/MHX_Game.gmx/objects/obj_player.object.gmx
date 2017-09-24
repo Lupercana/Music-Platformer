@@ -344,6 +344,8 @@ while (place_meeting(x, y, obj_platform) &amp;&amp; place_meeting(x, y - (abs(y_
             <kind>1</kind>
             <string>if (!death)
 {
+    audio_stop_all();
+    audio_play_sound(snd_death,10,false);
     unint_anim_id = 1;
     sprite_index = sp_player_death;
     if (facing_right)
