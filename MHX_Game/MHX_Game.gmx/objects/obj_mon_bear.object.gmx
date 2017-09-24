@@ -29,8 +29,8 @@
 fall_speed_max = 15;
 
 image_speed = 2;
-image_xscale = 0.35;
-image_yscale = 0.35;
+image_xscale = 0.755;
+image_yscale = 0.25;
 
 x_spd = 5;
 y_vel = 0;
