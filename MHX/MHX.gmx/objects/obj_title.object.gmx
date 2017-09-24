@@ -27,7 +27,8 @@
             <kind>1</kind>
             <string>//Initializes the menu
 menu[0]="Start Game";
-menu[1]="Exit Game";
+menu[1]="Instructions";
+menu[2]="Exit Game";
 
 space=64;
 mpos=0;
@@ -99,7 +100,7 @@ draw_set_font(32);
 draw_set_colour(c_white);
 
 var m;
-for(m=0; m&lt; array_length_1d(menu) ; m+= 1)
+for(m = 0; m &lt; array_length_1d(menu) ; m += 1)
 {
 draw_text(x+ space, y + (m * space), string(menu[m]))
 }
